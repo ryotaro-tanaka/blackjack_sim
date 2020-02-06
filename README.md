@@ -6,7 +6,7 @@ I want to win at BlackJack!
 [rules](https://bicyclecards.com/how-to-play/blackjack/)
 
 # Player Action
-* Have 10(USD?).
+* Have 1000(USD?).
 * Bet is 10(USD?).
 * Stand if the dealer has greater than equal to 7.(including A)
 * Stand if greater than or equal to 17.

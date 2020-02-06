@@ -53,18 +53,43 @@ impl Player {
     fn hit(&mut self, card: i32) {
         self.hand.push(card);
     }
+    fn remove_hand(&mut self) {
+        self.hand = vec![];
+    }
+}
+
+struct Dealer {
+    hand: Vec<i32>,
+}
+impl Dealer {
+    fn new() -> Dealer {
+        Dealer {
+            hand: vec![],
+        }
+    }
+    fn hit(&mut self, card: i32) {
+        self.hand.push(card);
+    }
+    fn remove_hand(&mut self) {
+        self.hand = vec![];
+    }
 }
 
 fn main() {
     let mut deck = Deck::new();
     deck.add();
 
-    println!("{:?}", deck.cards);
-    assert!(deck.cards.len() == 52);
+    // println!("{:?}", deck.cards);
+    // assert!(deck.cards.len() == 52);
 
     let mut _player = Player::new();
     _player.hit(deck.drow());
+    _player.hit(deck.drow());
+    _player.hit(deck.drow());
 
-    println!("{}", _player.sum());
-    assert!(deck.cards.len() == 51);
+    println!("{:?}", _player.hand);
+
+    _player.remove_hand();
+
+    println!("{:?}", _player.hand);
 }
