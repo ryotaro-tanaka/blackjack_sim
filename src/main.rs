@@ -19,21 +19,52 @@ impl Deck {
         _case.shuffle(&mut rand::thread_rng());
         self.cards = _case;
     }
+    fn drow(&mut self) -> i32 {
+        let card = self.cards[0];
+        self.cards.remove(0);
+
+        if self.cards.len() == 0 {
+            self.add();
+        }
+
+        return card;
+    }
+}
+
+struct Player {
+    hand: Vec<i32>,
+    money: i32,
+}
+impl Player {
+    fn new () -> Player {
+        Player {
+            hand: vec![],
+            money: 1000,
+        }
+    }
+    // not considering Ace
+    fn sum(&self) -> i32 {
+        let mut sum = 0;
+        for card in &self.hand {
+            sum = sum + card;
+        }
+        return sum;
+    }
+    fn hit(&mut self, card: i32) {
+        self.hand.push(card);
+    }
 }
 
 fn main() {
     let mut deck = Deck::new();
     deck.add();
 
-    println!("{}", deck.cards.len());
     println!("{:?}", deck.cards);
-    println!("Hello, world!");
-}
+    assert!(deck.cards.len() == 52);
 
-// == println!("{:?}", _cards);
-// fn print_cards(_cards: Vec<i32>) {
-//     for card in _cards {
-//         print!("{}, ", card);
-//     }
-//     println!("");
-// }
+    let mut _player = Player::new();
+    _player.hit(deck.drow());
+
+    println!("{}", _player.sum());
+    assert!(deck.cards.len() == 51);
+}
