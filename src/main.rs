@@ -43,13 +43,13 @@ impl Player {
         }
     }
     // not considering Ace
-    fn sum(&self) -> i32 {
-        let mut sum = 0;
-        for card in &self.hand {
-            sum = sum + card;
-        }
-        return sum;
-    }
+    // fn sum(&self) -> i32 {
+    //     let mut sum = 0;
+    //     for card in &self.hand {
+    //         sum = sum + card;
+    //     }
+    //     return sum;
+    // }
     fn hit(&mut self, card: i32) {
         self.hand.push(card);
     }
@@ -79,17 +79,48 @@ fn main() {
     let mut deck = Deck::new();
     deck.add();
 
-    // println!("{:?}", deck.cards);
+    let mut _player = Player::new();
+    let mut _dealer = Dealer::new();
+
+    println!("{:?}", deck.cards);
     // assert!(deck.cards.len() == 52);
 
-    let mut _player = Player::new();
-    _player.hit(deck.drow());
-    _player.hit(deck.drow());
-    _player.hit(deck.drow());
+    for _i in 0..100 {
+        _player.hit(deck.drow());
+        _player.hit(deck.drow());
 
-    println!("{:?}", _player.hand);
+        let open_card = deck.drow();
+        _dealer.hit(open_card);
+        _dealer.hit(deck.drow());
 
-    _player.remove_hand();
+        while player_thinks() {
+            //
+        }
 
-    println!("{:?}", _player.hand);
+        while dealer_thinks() {
+            //
+        }
+
+        if sum(_player.hand) == sum(_dealer.hand) {
+        }
+
+        _player.remove_hand();
+        _dealer.remove_hand();
+    }
+}
+fn player_thinks() -> bool {
+    //
+    return false;
+}
+fn dealer_thinks() -> bool {
+    //
+    return false;
+}
+// not considering Ace
+fn sum(hand: Vec<i32>) -> i32 {
+    let mut sum = 0;
+    for card in hand {
+        sum = sum + card;
+    }
+    return sum;
 }
