@@ -17,7 +17,7 @@ $ cargo run
 # Result
 1. 
 
-# Best plactice of player action
+# Best practice of player action
 * Hit if less than to 12.
 * Stand if the dealer has greater than equal to 7.(including A)
 * Stand if greater than or equal to 15.

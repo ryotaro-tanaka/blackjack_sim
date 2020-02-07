@@ -1,4 +1,5 @@
 use rand::seq::SliceRandom;
+use std::collections::HashMap;
 
 struct Deck {
     cards: Vec<i32>,
@@ -42,14 +43,6 @@ impl Player {
             cash: 1000,
         }
     }
-    // not considering Ace
-    // fn sum(&self) -> i32 {
-    //     let mut sum = 0;
-    //     for card in &self.hand {
-    //         sum = sum + card;
-    //     }
-    //     return sum;
-    // }
     fn hit(&mut self, card: i32) {
         self.hand.push(card);
     }
@@ -124,6 +117,7 @@ fn main() {
         println!("player => {} {:?}", sum_player, _player.hand);
         println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
 
+        // next game
         _player.remove_hand();
         _dealer.remove_hand();
     }
@@ -136,13 +130,30 @@ fn dealer_thinks() -> bool {
     //
     false
 }
-// not considering Ace
+// considering Ace
 fn sum(hand: &Vec<i32>) -> i32 {
-    let mut sum = 0;
+    let mut sum = HashMap::new();
+    sum.insert("small_ace", 0 as i32);
+    sum.insert("big_ace", 0 as i32);
+    // assert!(sum.contains_key("small_ace"));
+
+    let mut is_used_ace = false;
     for card in hand {
-        sum = sum + card;
+        let mut card_val = card;
+        sum.insert("small_ace", sum.get("small_ace").unwrap() + card_val);
+        
+        if card == &1 && !is_used_ace {
+            card_val = &11;
+            is_used_ace = true;
+        }
+        sum.insert("big_ace", sum.get("big_ace").unwrap() + card_val);
     }
-    sum
+
+    let mut result_val = *sum.get("big_ace").unwrap();
+    if result_val > 21 {
+        result_val = *sum.get("small_ace").unwrap();
+    }
+    result_val
 }
 fn check_bj(hand: &Vec<i32>) -> bool {
     if hand.len() != 2 { return false; }
