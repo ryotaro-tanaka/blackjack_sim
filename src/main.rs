@@ -27,7 +27,7 @@ impl Deck {
             self.add();
         }
 
-        return card;
+        card
     }
 }
 
@@ -85,6 +85,7 @@ fn main() {
     println!("{:?}", deck.cards);
     // assert!(deck.cards.len() == 52);
 
+    // game
     for _i in 0..100 {
         _player.hit(deck.drow());
         _player.hit(deck.drow());
@@ -101,8 +102,9 @@ fn main() {
             //
         }
 
-        if sum(_player.hand) == sum(_dealer.hand) {
-        }
+        // if sum(_player.hand) == sum(_dealer.hand) {
+        // }
+        println!("{}", sum(&_player.hand));
 
         _player.remove_hand();
         _dealer.remove_hand();
@@ -110,17 +112,17 @@ fn main() {
 }
 fn player_thinks() -> bool {
     //
-    return false;
+    false
 }
 fn dealer_thinks() -> bool {
     //
-    return false;
+    false
 }
 // not considering Ace
-fn sum(hand: Vec<i32>) -> i32 {
+fn sum(hand: &Vec<i32>) -> i32 {
     let mut sum = 0;
     for card in hand {
         sum = sum + card;
     }
-    return sum;
+    sum
 }
