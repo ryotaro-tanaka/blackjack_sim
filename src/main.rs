@@ -79,11 +79,8 @@ fn main() {
     let mut _player = Player::new();
     let mut _dealer = Dealer::new();
 
-    println!("{:?}", deck.cards);
-    // assert!(deck.cards.len() == 52);
-
     // game
-    for _i in 0..2 {
+    for _i in 0..100000 {
         //drow 
         _player.hit(deck.drow());
         _player.hit(deck.drow());
@@ -123,24 +120,17 @@ fn main() {
             assert!(sum_player == sum_dealer);
         }
 
-        // if sum_player > 21 || sum_player < sum_dealer {
-        //     _player.pay(-bet);
-        // } else if sum_player > sum_dealer {
-        //     if check_bj(&_player.hand) {
-        //         _player.pay((bet as f64 * 1.5) as i32);
-        //     } else {
-        //         _player.pay(bet);
-        //     }
-        // }
-
-        println!("cash => {}", _player.cash);
-        println!("player => {} {:?}", sum_player, _player.hand);
-        println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
+        // println!("cash => {}", _player.cash);
+        // println!("player => {} {:?}", sum_player, _player.hand);
+        // println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
 
         // next game
         _player.remove_hand();
         _dealer.remove_hand();
     }
+
+    println!("-------result--------");
+    println!("cash => {}", _player.cash);
 }
 fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
     let sum_val = sum(_hand);
