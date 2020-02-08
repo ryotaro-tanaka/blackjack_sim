@@ -94,7 +94,7 @@ fn main() {
         while player_thinks() {
             _player.hit(deck.drow());
         }
-        while dealer_thinks() {
+        while dealer_thinks(&_dealer.hand) {
             _dealer.hit(deck.drow());
         }
 
@@ -126,16 +126,13 @@ fn player_thinks() -> bool {
     //
     false
 }
-fn dealer_thinks() -> bool {
-    //
-    false
+fn dealer_thinks(_hand: &Vec<i32>) -> bool {
+    sum(_hand) < 17
 }
-// considering Ace
 fn sum(hand: &Vec<i32>) -> i32 {
     let mut sum = HashMap::new();
     sum.insert("small_ace", 0 as i32);
     sum.insert("big_ace", 0 as i32);
-    // assert!(sum.contains_key("small_ace"));
 
     let mut is_used_ace = false;
     for card in hand {
