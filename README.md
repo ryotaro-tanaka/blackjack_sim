@@ -8,7 +8,8 @@ $ cargo run
 ```
 
 # Rules of BlackJack
-[rules](https://bicyclecards.com/how-to-play/blackjack/)
+[rules](https://bicyclecards.com/how-to-play/blackjack/)  
+* The one-deck game.(52 cards)
 
 # Rules of Player
 * Have 1000(USD?).
@@ -17,9 +18,8 @@ $ cargo run
 # Result
 1. 
 
-# Best plactice of player action
-* Hit if less than to 12.
-* Stand if the dealer has greater than equal to 7.(including A)
-* Stand if greater than or equal to 15.
-* Hit if less than to 15.
-
+# Best practice of player action
+1. Hit if less than to 12.
+1. Stand if the dealer has greater than equal to 7.(including A)
+1. Stand if greater than or equal to 15.
+1. Hit if less than to 15.

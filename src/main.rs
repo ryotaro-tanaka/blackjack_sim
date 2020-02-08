@@ -1,4 +1,5 @@
 use rand::seq::SliceRandom;
+use std::collections::HashMap;
 
 struct Deck {
     cards: Vec<i32>,
@@ -10,6 +11,7 @@ impl Deck {
         }
     }
     fn add(&mut self) {
+        // one deck game
         let mut _case = vec![
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
@@ -42,14 +44,6 @@ impl Player {
             cash: 1000,
         }
     }
-    // not considering Ace
-    // fn sum(&self) -> i32 {
-    //     let mut sum = 0;
-    //     for card in &self.hand {
-    //         sum = sum + card;
-    //     }
-    //     return sum;
-    // }
     fn hit(&mut self, card: i32) {
         self.hand.push(card);
     }
@@ -85,11 +79,8 @@ fn main() {
     let mut _player = Player::new();
     let mut _dealer = Dealer::new();
 
-    println!("{:?}", deck.cards);
-    // assert!(deck.cards.len() == 52);
-
     // game
-    for _i in 0..1 {
+    for _i in 0..100000 {
         //drow 
         _player.hit(deck.drow());
         _player.hit(deck.drow());
@@ -98,10 +89,10 @@ fn main() {
         _dealer.hit(deck.drow());
 
         //think
-        while player_thinks() {
+        while player_thinks(&_player.hand, open_card) {
             _player.hit(deck.drow());
         }
-        while dealer_thinks() {
+        while dealer_thinks(&_dealer.hand) {
             _dealer.hit(deck.drow());
         }
 
@@ -110,39 +101,72 @@ fn main() {
         let sum_player = sum(&_player.hand);
         let sum_dealer = sum(&_dealer.hand);
 
-        if sum_player > 21 || sum_player < sum_dealer {
+        if sum_player > 21 ||
+        (sum_dealer <= 21 && sum_player < sum_dealer) {
+            // lose
             _player.pay(-bet);
-        } else if sum_player > sum_dealer {
+        } else if sum_dealer > 21 ||
+        sum_player > sum_dealer {
+            // win
             if check_bj(&_player.hand) {
-                _player.pay((bet as f64 * 1.5) as i32);
+                _player.pay((bet as f64 * 1.5) as i32); 
             } else {
                 _player.pay(bet);
             }
+        } else {
+            // no game
+            assert!(sum_player <= 21);
+            assert!(sum_dealer <= 21);
+            assert!(sum_player == sum_dealer);
         }
 
-        println!("cash => {}", _player.cash);
-        println!("player => {} {:?}", sum_player, _player.hand);
-        println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
+        // println!("cash => {}", _player.cash);
+        // println!("player => {} {:?}", sum_player, _player.hand);
+        // println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
 
+        // next game
         _player.remove_hand();
         _dealer.remove_hand();
     }
+
+    println!("-------result--------");
+    println!("cash => {}", _player.cash);
 }
-fn player_thinks() -> bool {
-    //
+fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
+    let sum_val = sum(_hand);
+
+    if sum_val < 12 { return true; }
+    if _open_card < 7 { return false; }
+    // TODO: _open_card?
+    if sum_val < 17 { return true; }
+
     false
 }
-fn dealer_thinks() -> bool {
-    //
-    false
+fn dealer_thinks(_hand: &Vec<i32>) -> bool {
+    sum(_hand) < 17
 }
-// not considering Ace
 fn sum(hand: &Vec<i32>) -> i32 {
-    let mut sum = 0;
+    let mut sum = HashMap::new();
+    sum.insert("small_ace", 0 as i32);
+    sum.insert("big_ace", 0 as i32);
+
+    let mut is_used_ace = false;
     for card in hand {
-        sum = sum + card;
+        let mut card_val = card;
+        sum.insert("small_ace", sum.get("small_ace").unwrap() + card_val);
+        
+        if card == &1 && !is_used_ace {
+            card_val = &11;
+            is_used_ace = true;
+        }
+        sum.insert("big_ace", sum.get("big_ace").unwrap() + card_val);
     }
-    sum
+
+    let mut result_val = *sum.get("big_ace").unwrap();
+    if result_val > 21 {
+        result_val = *sum.get("small_ace").unwrap();
+    }
+    result_val
 }
 fn check_bj(hand: &Vec<i32>) -> bool {
     if hand.len() != 2 { return false; }
