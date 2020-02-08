@@ -91,7 +91,7 @@ fn main() {
         _dealer.hit(deck.drow());
 
         //think
-        while player_thinks() {
+        while player_thinks(&_player.hand, open_card) {
             _player.hit(deck.drow());
         }
         while dealer_thinks(&_dealer.hand) {
@@ -122,8 +122,14 @@ fn main() {
         _dealer.remove_hand();
     }
 }
-fn player_thinks() -> bool {
-    //
+fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
+    let sum_val = sum(_hand);
+
+    if sum_val < 12 { return true; }
+    if _open_card < 7 { return false; }
+    // TODO: _open_card?
+    if sum_val < 17 { return true; }
+
     false
 }
 fn dealer_thinks(_hand: &Vec<i32>) -> bool {
