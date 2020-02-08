@@ -8,7 +8,8 @@ $ cargo run
 ```
 
 # Rules of BlackJack
-[rules](https://bicyclecards.com/how-to-play/blackjack/)
+[rules](https://bicyclecards.com/how-to-play/blackjack/)  
+* The one-deck game.(52 cards)
 
 # Rules of Player
 * Have 1000(USD?).

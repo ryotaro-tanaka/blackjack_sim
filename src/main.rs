@@ -11,6 +11,7 @@ impl Deck {
         }
     }
     fn add(&mut self) {
+        // one deck game
         let mut _case = vec![
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
@@ -82,7 +83,7 @@ fn main() {
     // assert!(deck.cards.len() == 52);
 
     // game
-    for _i in 0..1 {
+    for _i in 0..2 {
         //drow 
         _player.hit(deck.drow());
         _player.hit(deck.drow());
@@ -103,15 +104,34 @@ fn main() {
         let sum_player = sum(&_player.hand);
         let sum_dealer = sum(&_dealer.hand);
 
-        if sum_player > 21 || sum_player < sum_dealer {
+        if sum_player > 21 ||
+        (sum_dealer <= 21 && sum_player < sum_dealer) {
+            // lose
             _player.pay(-bet);
-        } else if sum_player > sum_dealer {
+        } else if sum_dealer > 21 ||
+        sum_player > sum_dealer {
+            // win
             if check_bj(&_player.hand) {
-                _player.pay((bet as f64 * 1.5) as i32);
+                _player.pay((bet as f64 * 1.5) as i32); 
             } else {
                 _player.pay(bet);
             }
+        } else {
+            // no game
+            assert!(sum_player <= 21);
+            assert!(sum_dealer <= 21);
+            assert!(sum_player == sum_dealer);
         }
+
+        // if sum_player > 21 || sum_player < sum_dealer {
+        //     _player.pay(-bet);
+        // } else if sum_player > sum_dealer {
+        //     if check_bj(&_player.hand) {
+        //         _player.pay((bet as f64 * 1.5) as i32);
+        //     } else {
+        //         _player.pay(bet);
+        //     }
+        // }
 
         println!("cash => {}", _player.cash);
         println!("player => {} {:?}", sum_player, _player.hand);
