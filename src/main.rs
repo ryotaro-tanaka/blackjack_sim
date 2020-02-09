@@ -165,12 +165,9 @@ fn main() {
 fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
     let sum_val = sum(_hand);
 
-    // if sum_val < 12 { return true; }
-    // if _open_card < 7 { return false; }
-    // // TODO: _open_card?
-    // if sum_val < 17 { return true; }
-
-    //false
+    if sum_val < 12 { return true; }
+    if _open_card < 7 || _open_card == 1 { return false; }
+    // TODO: open card is ...?
 
     sum_val < 15
 }
