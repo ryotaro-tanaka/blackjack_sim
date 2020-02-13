@@ -134,74 +134,69 @@ fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
     let sum_val = sum(_hand);
 
     if sum_val < 12 { return true; }
-    if _open_card < ? || _open_card == 1 { return false; }
+
+    // look and think about open card
+    if _open_card < ? && _open_card != 1 { return false; }
 
     sum_val < 15
 }
 ```
 
 **result**
-6 is best?  
-but fail because bad than [##2].  
-* 11
-```
-rate => win: 41%, lose: 51%
-cash => -84005
-player bust is 0 times
-```
+7 is best?
 * 10
 ```
-rate => win: 41%, lose: 50%
-cash => -68030
-player bust is 3946 times
+rate => win: 42%, lose: 50%
+cash => -62455
+player bust is 5030 times
 ```
 * 9
 ```
-rate => win: 41%, lose: 50%
-cash => -67915
-player bust is 5101 times
+rate => win: 42%, lose: 50%
+cash => -60230
+player bust is 6092 times
 ```
 * 8
 ```
-rate => win: 42%, lose: 50%
-cash => -56350
-player bust is 6164 times
+rate => win: 42%, lose: 49%
+cash => -53465
+player bust is 7154 times
 ```
 * 7
 ```
-rate => win: 42%, lose: 50%
-cash => -58350
-player bust is 7102 times
+rate => win: 42%, lose: 49%
+cash => -47935
+player bust is 8230 times
 ```
-* 6 (best?)
+* 6
 ```
 rate => win: 42%, lose: 49%
-cash => -54255
-player bust is 8329 times
+cash => -53165
+player bust is 9297 times
 ```
 * 5
 ```
-rate => win: 41%, lose: 50%
-cash => -61655
-player bust is 9246 times
+rate => win: 42%, lose: 49%
+cash => -52025
+player bust is 10242 times
 ```
 * 4
 ```
-rate => win: 41%, lose: 50%
-cash => -62000
-player bust is 10480 times
+rate => win: 41%, lose: 49%
+cash => -56800
+player bust is 11244 times
 ```
 * 3
 ```
-rate => win: 41%, lose: 49%
-cash => -61000
-player bust is 11329 times
+rate => win: 42%, lose: 49%
+cash => -53845
+player bust is 12191 times
 ```
 * 2
 ```
 rate => win: 41%, lose: 49%
-cash => -61795
-player bust is 12352 times
+cash => -54305
+player bust is 13253 times
 ```
 
 ## 4: look at open card and sum value and think
