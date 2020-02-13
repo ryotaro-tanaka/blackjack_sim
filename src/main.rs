@@ -164,11 +164,19 @@ fn main() {
 }
 fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
     let sum_val = sum(_hand);
+    let mut conv_open_card = _open_card;
+    if conv_open_card == 1 { conv_open_card = 11; }
 
     if sum_val < 12 { return true; }
-    // look and think about open card
-    if _open_card < 7 && _open_card != 1 { return false; }
 
+    // 3: look and think about open card
+    // if _open_card < 7 && _open_card != 1 { return false; }
+    if conv_open_card < 7 { return false; }
+
+    // 4: look and think about open card and sum value
+    if sum_val >= 15 && sum_val < 21 && sum_val < conv_open_card + 10 { return true; }
+
+    // 2: change threshold of hit
     sum_val < 15
 }
 fn dealer_thinks(_hand: &Vec<i32>) -> bool {

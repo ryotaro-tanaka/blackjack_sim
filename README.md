@@ -199,14 +199,79 @@ cash => -54305
 player bust is 13253 times
 ```
 
-## 4: look at open card and sum value and think
+## 4: look and think about open card and sum value
+**zentei**  
+1. Ace == 11.
+2. next card is 10
+
 **think**  
-1. ?
+1. Hit if less than to 12.
+1. Stand if open card is greater than equal to 7.
+1. if sum_val >= 15 && sum_val < 18 && sum_val < conv_open_card + 10 { return true; }
+1. Hit if less than to 15.
 
 **code**
-```rest
+```rust
+fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
+    let sum_val = sum(_hand);
+    let mut conv_open_card = _open_card;
+    if conv_open_card == 1 { conv_open_card = 11; }
+
+    if sum_val < 12 { return true; }
+
+    // 3: look and think about open card
+    if conv_open_card < 7 { return false; }
+
+    // 4: look and think about open card and sum value
+    if sum_val >= 15 && sum_val < ? && sum_val < conv_open_card + 10 { return true; }
+
+    // 2: change threshold of hit
+    sum_val < 15
+}
 ```
 
 **result**
+* 21
 ```
+rate => win: 38%, lose: 53%
+cash => -124660
+player bust is 34607 times
 ```
+* 20
+```
+rate => win: 39%, lose: 52%
+cash => -105965
+player bust is 32927 times
+```
+* 19
+```
+rate => win: 41%, lose: 50%
+cash => -64655
+player bust is 27730 times
+```
+* 18
+```
+rate => win: 42%, lose: 48%
+cash => -42625
+player bust is 22896 times
+```
+* 17
+```
+rate => win: 42%, lose: 48%
+cash => -30915
+player bust is 17569 times
+```
+* 16
+```
+rate => win: 42%, lose: 48%
+cash => -35390
+player bust is 12472 times
+```
+* 15
+```
+rate => win: 42%, lose: 49%
+cash => -50435
+player bust is 8159 times
+```
+
+## 5: split?
