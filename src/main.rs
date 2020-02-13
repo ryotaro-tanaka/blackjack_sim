@@ -20,6 +20,19 @@ impl Deck {
             ];
         _case.shuffle(&mut rand::thread_rng());
         self.cards = _case;
+
+        // // six deck game
+        // let mut _pack = vec![];
+        // for _i in 0..6 {
+        //     _pack.append(&vec![
+        //             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+        //             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+        //             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+        //             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+        //             ]);
+        // }
+        // _pack.shuffle(&mut rand::thread_rng());
+        // self.cards.append(_pack);
     }
     fn drow(&mut self) -> i32 {
         let card = self.cards[0];
@@ -41,7 +54,7 @@ impl Player {
     fn new () -> Player {
         Player {
             hand: vec![],
-            cash: 1000,
+            cash: 0,
         }
     }
     fn hit(&mut self, card: i32) {
@@ -73,14 +86,21 @@ impl Dealer {
 }
 
 fn main() {
+    // init
     let mut deck = Deck::new();
     deck.add();
-
     let mut _player = Player::new();
     let mut _dealer = Dealer::new();
 
+    // for result window
+    let times = 100000;
+    let mut win_count = 0;
+    let mut lose_count = 0;
+    let mut player_bust_count = 0;
+    let mut dealer_bust_count = 0;
+
     // game
-    for _i in 0..100000 {
+    for _i in 0..times {
         //drow 
         _player.hit(deck.drow());
         _player.hit(deck.drow());
@@ -105,6 +125,7 @@ fn main() {
         (sum_dealer <= 21 && sum_player < sum_dealer) {
             // lose
             _player.pay(-bet);
+            lose_count = lose_count + 1;
         } else if sum_dealer > 21 ||
         sum_player > sum_dealer {
             // win
@@ -113,6 +134,7 @@ fn main() {
             } else {
                 _player.pay(bet);
             }
+            win_count = win_count + 1;
         } else {
             // no game
             assert!(sum_player <= 21);
@@ -120,27 +142,34 @@ fn main() {
             assert!(sum_player == sum_dealer);
         }
 
-        // println!("cash => {}", _player.cash);
-        // println!("player => {} {:?}", sum_player, _player.hand);
-        // println!("dealer => {} {:?}", sum_dealer, _dealer.hand);
+        // for result window
+        if sum_player > 21 {
+            player_bust_count = player_bust_count + 1;
+        }
+        if sum_dealer > 21 {
+            dealer_bust_count = dealer_bust_count + 1;
+        }
 
         // next game
         _player.remove_hand();
         _dealer.remove_hand();
     }
 
-    println!("-------result--------");
+    println!(" -------result-------");
+    println!("repeated {} times", times);
+    println!("rate => win: {}%, lose: {}%", win_count / (times / 100), lose_count / (times / 100));
     println!("cash => {}", _player.cash);
+    println!("player bust is {} times", player_bust_count);
+    println!("dealer bust is {} times", dealer_bust_count);
 }
 fn player_thinks(_hand: &Vec<i32>, _open_card: i32) -> bool {
     let sum_val = sum(_hand);
 
     if sum_val < 12 { return true; }
-    if _open_card < 7 { return false; }
-    // TODO: _open_card?
-    if sum_val < 17 { return true; }
+    if _open_card < 7 || _open_card == 1 { return false; }
+    // TODO: open card is ...?
 
-    false
+    sum_val < 15
 }
 fn dealer_thinks(_hand: &Vec<i32>) -> bool {
     sum(_hand) < 17
