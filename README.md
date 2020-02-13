@@ -122,7 +122,7 @@ cash => -81845
 player bust is 0 times
 ```
 
-## 3: look at open card and think
+## 3: look and think about open card
 **think**
 1. Hit if less than to 12.(no bust)
 1. Stand if open card is greater than equal to ?.(Ace = 11)
@@ -202,4 +202,16 @@ player bust is 11329 times
 rate => win: 41%, lose: 49%
 cash => -61795
 player bust is 12352 times
+```
+
+## 4: look at open card and sum value and think
+**think**  
+1. ?
+
+**code**
+```rest
+```
+
+**result**
+```
 ```
