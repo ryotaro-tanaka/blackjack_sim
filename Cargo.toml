@@ -1,6 +1,6 @@
 [package]
 name = "blackjack_sim"
-version = "1.1.0"
+version = "1.1.1"
 authors = ["ryotaro tanaka <ryotaro_tanaka@outlook.com>"]
 edition = "2018"
 
