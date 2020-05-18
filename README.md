@@ -204,7 +204,7 @@ player bust is 13253 times
 ```
 
 ## 4: look and think about open card and sum value
-**zentei**  
+**precondition**  
 1. Ace == 11.
 2. next card is 10
 
